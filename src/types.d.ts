@@ -14,3 +14,14 @@ export type Roll = {
   critFail: boolean;
   result: number;
 };
+
+export type APIResponse = {
+  count: number;
+  results: any[];
+}
+
+export type APIResult = {
+  index: string;
+  name: string;
+  url: string;
+}
