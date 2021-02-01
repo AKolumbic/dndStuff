@@ -18,4 +18,9 @@ export const getRandom = (inputArr: any[]) => {
   return inputArr[rng];
 };
 
+export const dice: App.DiceType[] = [20, 4, 6, 8, 10, 12, 100];
+
+export const APIs: App.API[] = ['monsters', 'classes', 'races', 'equipment', 'spells']
+
+
 

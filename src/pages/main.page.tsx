@@ -11,7 +11,6 @@ export const MainPage = () => {
   const [multiplier, setMultiplier] = useState(1);
   const [rollValue, setRollValue] = useState("");
   const [rollStyle, setRollStyle] = useState({ color: "white" });
-
   const hide = true;
   const updateDiceValue = (value: App.DiceType) => {
     setDieType(value);
@@ -24,9 +23,9 @@ export const MainPage = () => {
   };
 
   const updateRoll = (value: string) => {
-    value === '20'
+    value === "20"
       ? setRollStyle({ color: "green" })
-      : value === '1'
+      : value === "1"
       ? setRollStyle({ color: "red" })
       : setRollStyle({ color: "white" });
     setRollValue(value);

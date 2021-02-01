@@ -1,23 +1,34 @@
-import { ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
+import { dice, APIs } from "../services/utils";
 
 export const Dropdown = ({
   updateDiceValue,
+  updateAPIType,
 }: {
-  updateDiceValue: (value: App.DiceType) => void;
+  updateDiceValue?: (value: App.DiceType) => void;
+  updateAPIType?: (api: App.API) => void;
 }) => {
-  const dice: App.DiceType[] = [20, 4, 6, 8, 10, 12, 100];
+  const [options, setOptions] = useState<any[]>([]);
+
+  useEffect(() => {
+    updateDiceValue && setOptions(dice);
+    updateAPIType && setOptions(APIs);
+  }, [updateDiceValue, updateAPIType]);
 
   const handleSelect = (change: ChangeEvent<HTMLSelectElement>) => {
-    updateDiceValue(Number(change.target.value) as App.DiceType);
+    updateDiceValue &&
+      updateDiceValue(Number(change.target.value) as App.DiceType);
+
+    updateAPIType && updateAPIType(String(change.target.value) as App.API);
   };
 
   return (
     <>
-      <label htmlFor="dice">Select A Die: </label>
+      <label htmlFor="dice">Select: </label>
       <select name="dice" id="dice" onChange={(change) => handleSelect(change)}>
-        {dice.map((die: App.DiceType) => (
-          <option value={die} key={die}>
-            {die}
+        {options.map((option, index) => (
+          <option value={option} key={index}>
+            {option}
           </option>
         ))}
       </select>

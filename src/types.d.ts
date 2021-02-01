@@ -18,10 +18,17 @@ export type Roll = {
 export type APIResponse = {
   count: number;
   results: any[];
-}
+};
 
 export type APIResult = {
   index: string;
   name: string;
   url: string;
-}
+};
+
+export type API =
+  | "monsters"
+  | "classes"
+  | "races"
+  | "equipment"
+  | "spells";
