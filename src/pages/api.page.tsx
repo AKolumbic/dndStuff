@@ -11,7 +11,6 @@ export const APIPage = () => {
   } as App.APIResponse);
   const [apiType, setAPIType] = useState<App.API>("monsters");
   const [item, setItem] = useState<App.DataType>(null);
-  const hide = true;
 
   const setData = (data: App.APIResponse) => {
     setItem(null);
@@ -37,7 +36,7 @@ export const APIPage = () => {
       >
         {`fetch ${apiType} data`}
       </button>
-      {hide ? null : <Search updateQuery={updateQuery} />}
+      <Search render={false} updateQuery={updateQuery} />
       <div>
         {!item ? (
           map(localState.results, (result) => {

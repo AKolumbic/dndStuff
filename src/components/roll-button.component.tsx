@@ -4,11 +4,13 @@ import { random } from "../services/utils";
 export const RollButton = ({
   dice,
   updateRoll,
+  render,
 }: {
   dice: App.Dice;
   updateRoll: (value: string) => void;
+  render?: boolean;
 }) => {
-  const { die, modifier, multiplier } = dice;
+  const { die, modifier } = dice;
   const [rollText, setRollText] = useState<string>("");
   const [diceRoll, setDiceRoll] = useState<App.Roll>({
     text: "",
@@ -24,35 +26,37 @@ export const RollButton = ({
 
   const text =
     diceRoll.result === 0
-      ? `Roll ${multiplier}d${die}`
+      ? `d${die}`
       : `${diceRoll.text}${diceRoll.result}`;
 
   useEffect(() => {
     const text =
       modifier === 0
-        ? `${multiplier}d${die}: `
-        : `${multiplier}d${die}${modifier}: `;
+        ? `d${die}: `
+        : `d${die}${modifier}: `;
     setRollText(text);
-  }, [die, multiplier, modifier]);
+  }, [die, modifier]);
 
   const roll = (click: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     click.preventDefault();
-    const result = !multiplier
-      ? random(1, die + 1) + modifier
-      : multiplier * random(1, die + 1) + modifier;
+    const result = random(1, die + 1) + modifier;
 
-      setDiceRoll({
-        text: rollText,
-        critRoll: result === 20,
-        critFail: result === 1,
-        result: result,
-      });
-      updateRoll(String(result));
+    setDiceRoll({
+      text: rollText,
+      critRoll: result === 20,
+      critFail: result === 1,
+      result: result,
+    });
+    updateRoll(String(result));
   };
 
   return (
-    <button onClick={(click) => roll(click)}>
-      <div style={style}>{text}</div>
-    </button>
+    <>
+      {render === false ? null : (
+        <button onClick={(click) => roll(click)}>
+          <div style={style}>{text}</div>
+        </button>
+      )}
+    </>
   );
 };

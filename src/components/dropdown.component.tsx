@@ -2,9 +2,11 @@ import { useState, useEffect, ChangeEvent } from "react";
 import { dice, APIs } from "../services/utils";
 
 export const Dropdown = ({
+  render,
   updateDiceValue,
   updateAPIType,
 }: {
+  render?: boolean;
   updateDiceValue?: (value: App.DiceType) => void;
   updateAPIType?: (api: App.API) => void;
 }) => {
@@ -24,14 +26,22 @@ export const Dropdown = ({
 
   return (
     <>
-      <label htmlFor="dice">Select: </label>
-      <select name="dice" id="dice" onChange={(change) => handleSelect(change)}>
-        {options.map((option, index) => (
-          <option value={option} key={index}>
-            {option}
-          </option>
-        ))}
-      </select>
+      {render === false ? null : (
+        <>
+          <label htmlFor="dice">Select: </label>
+          <select
+            name="dice"
+            id="dice"
+            onChange={(change) => handleSelect(change)}
+          >
+            {options.map((option, index) => (
+              <option value={option} key={index}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
     </>
   );
 };

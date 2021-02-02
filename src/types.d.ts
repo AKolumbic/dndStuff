@@ -20,7 +20,6 @@ export type DataType = null | Monster | PlayerClass
 interface Dice {
   die: App.DiceType;
   modifier: number;
-  multiplier: number;
 }
 
 interface Roll {

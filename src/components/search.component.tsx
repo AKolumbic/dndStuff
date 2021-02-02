@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 export const Search = ({
+  render,
   updateQuery,
 }: {
+  render: boolean;
   updateQuery: (value: string) => void;
 }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -13,17 +15,21 @@ export const Search = ({
   };
 
   return (
-    <div>
-      <input onChange={(event) => handleChange(event)} />
-      <button
-        type="submit"
-        onClick={(click) => {
-          click.preventDefault();
-          updateQuery(searchValue);
-        }}
-      >
-        Search
-      </button>
-    </div>
+    <>
+      {render ? (
+        <div>
+          <input onChange={(event) => handleChange(event)} />
+          <button
+            type="submit"
+            onClick={(click) => {
+              click.preventDefault();
+              updateQuery(searchValue);
+            }}
+          >
+            Search
+          </button>
+        </div>
+      ) : null}
+    </>
   );
 };
