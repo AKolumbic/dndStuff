@@ -9,10 +9,11 @@ export const APIPage = () => {
     count: 0,
     results: [],
   } as App.APIResponse);
-  const [apiType, setAPIType] = useState("monsters");
-  const [monsterData, setMonsterData] = useState<any>(null);
+  const [apiType, setAPIType] = useState<App.API>("monsters");
+  const [item, setItem] = useState<App.DataType>(null);
 
   const setData = (data: App.APIResponse) => {
+    setItem(null);
     setLocalState(data);
   };
 
@@ -21,19 +22,7 @@ export const APIPage = () => {
   };
 
   const updateQuery = (value: string) => {
-    const searchValue = value.replace(/\s+/g, "-").toLowerCase();
-    const options = { api: apiType, query: searchValue };
-    fetchData(setMonsterData, options);
-  };
-
-  const logData = (click: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    click.preventDefault();
-    // map(monsterData, (monster) => {
-      console.log("MONSTER: ", monsterData);
-    // });
-    map(localState.results, result => {
-      console.log("results: ", result);
-    });
+    fetchData(setItem, { api: apiType, query: value });
   };
 
   return (
@@ -45,26 +34,26 @@ export const APIPage = () => {
           fetchData(setData, { api: apiType });
         }}
       >
-        {`fetch ${apiType} data`}
+        {`fetch ${apiType}`}
       </button>
-      <Search updateQuery={updateQuery} />
+      <Search render={false} updateQuery={updateQuery} />
       <div>
-        {!monsterData ? (
-          map(localState.results, result => {
+        {!item ? (
+          map(localState.results, (result) => {
             return (
-                  <div
-                    key={result.index}
-                    onClick={(click) => {
-                      click.preventDefault();
-                      updateQuery(result.name);
-                    }}
-                  >
-                    {result.name}
-                  </div>
-                );
+              <div
+                key={result.index}
+                onClick={(click) => {
+                  click.preventDefault();
+                  updateQuery(result.index);
+                }}
+              >
+                {result.name}
+              </div>
+            );
           })
         ) : (
-          <button onClick={(click) => logData(click)}>Check Console</button>
+          <div>{item.name}</div>
         )}
       </div>
     </div>

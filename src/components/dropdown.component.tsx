@@ -2,17 +2,27 @@ import { useState, useEffect, ChangeEvent } from "react";
 import { dice, APIs } from "../services/utils";
 
 export const Dropdown = ({
+  render,
   updateDiceValue,
   updateAPIType,
 }: {
+  render?: boolean;
   updateDiceValue?: (value: App.DiceType) => void;
   updateAPIType?: (api: App.API) => void;
 }) => {
   const [options, setOptions] = useState<any[]>([]);
+  const [text, setText] = useState('');
 
   useEffect(() => {
-    updateDiceValue && setOptions(dice);
-    updateAPIType && setOptions(APIs);
+    if (!updateAPIType) {
+      setOptions(dice)
+      setText('Select Dice: ')
+    }
+
+    if (!updateDiceValue) {
+      setOptions(APIs)
+      setText('Select API List: ')
+    }
   }, [updateDiceValue, updateAPIType]);
 
   const handleSelect = (change: ChangeEvent<HTMLSelectElement>) => {
@@ -24,14 +34,21 @@ export const Dropdown = ({
 
   return (
     <>
-      <label htmlFor="dice">Select: </label>
-      <select name="dice" id="dice" onChange={(change) => handleSelect(change)}>
-        {options.map((option, index) => (
-          <option value={option} key={index}>
-            {option}
-          </option>
-        ))}
-      </select>
+      {render === false ? null : (
+        <>
+          <label htmlFor="options">{text}</label>
+          <select
+            name="options"
+            onChange={(change) => handleSelect(change)}
+          >
+            {options.map((option, index) => (
+              <option value={option} key={index}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
     </>
   );
 };

@@ -1,14 +1,16 @@
-import React from 'react';
+import React from "react";
 // import logo from './logo.svg';
-import './App.css';
-import { MainPage } from './pages/main.page';
+import "./App.css";
+import { RollPage } from "./pages/roll.page";
+import { APIPage } from "./pages/api.page";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <MainPage />
+        <RollPage />
+        <APIPage />
       </header>
     </div>
   );
