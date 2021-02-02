@@ -43,7 +43,7 @@ export const RollButton = ({
 
     setDiceRoll({
       text: rollText,
-      critRoll: result === 20,
+      critRoll: result === die,
       critFail: result === 1,
       result: result,
     });

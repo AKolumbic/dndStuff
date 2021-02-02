@@ -34,7 +34,7 @@ export const APIPage = () => {
           fetchData(setData, { api: apiType });
         }}
       >
-        {`fetch ${apiType} data`}
+        {`fetch ${apiType}`}
       </button>
       <Search render={false} updateQuery={updateQuery} />
       <div>

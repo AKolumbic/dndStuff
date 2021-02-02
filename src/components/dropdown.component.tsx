@@ -11,10 +11,18 @@ export const Dropdown = ({
   updateAPIType?: (api: App.API) => void;
 }) => {
   const [options, setOptions] = useState<any[]>([]);
+  const [text, setText] = useState('');
 
   useEffect(() => {
-    updateDiceValue && setOptions(dice);
-    updateAPIType && setOptions(APIs);
+    if (!updateAPIType) {
+      setOptions(dice)
+      setText('Select Dice: ')
+    }
+
+    if (!updateDiceValue) {
+      setOptions(APIs)
+      setText('Select API List: ')
+    }
   }, [updateDiceValue, updateAPIType]);
 
   const handleSelect = (change: ChangeEvent<HTMLSelectElement>) => {
@@ -28,10 +36,9 @@ export const Dropdown = ({
     <>
       {render === false ? null : (
         <>
-          <label htmlFor="dice">Select: </label>
+          <label htmlFor="options">{text}</label>
           <select
-            name="dice"
-            id="dice"
+            name="options"
             onChange={(change) => handleSelect(change)}
           >
             {options.map((option, index) => (
