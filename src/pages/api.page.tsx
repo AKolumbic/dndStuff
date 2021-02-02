@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { map } from "lodash";
 import { Dropdown } from "../components/dropdown.component";
-
+import { Search } from "../components/search.component";
 import { fetchData } from "../services/api.service";
+
 export const APIPage = () => {
-  const [loading, setLoading] = useState(false);
   const [localState, setLocalState] = useState<App.APIResponse>({
     count: 0,
     results: [],
   } as App.APIResponse);
   const [apiType, setAPIType] = useState("monsters");
-  const [hasClicked, setHasClicked] = useState(false);
+  const [monsterData, setMonsterData] = useState<any>(null);
 
   const setData = (data: App.APIResponse) => {
     setLocalState(data);
@@ -19,39 +20,53 @@ export const APIPage = () => {
     setAPIType(value);
   };
 
-  useEffect(() => {
-    if (!hasClicked) return;
-    setLoading(true);
-    fetchData(setData, { api: apiType });
-    setLoading(false);
+  const updateQuery = (value: string) => {
+    const searchValue = value.replace(/\s+/g, "-").toLowerCase();
+    const options = { api: apiType, query: searchValue };
+    fetchData(setMonsterData, options);
+  };
 
-    return () => {
-      setLoading(false);
-    };
-  }, [apiType, hasClicked]);
+  const logData = (click: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    click.preventDefault();
+    // map(monsterData, (monster) => {
+      console.log("MONSTER: ", monsterData);
+    // });
+    map(localState.results, result => {
+      console.log("results: ", result);
+    });
+  };
 
   return (
     <div>
       <Dropdown updateAPIType={onChange} />
-      {hasClicked ? null : (
-        <button
-          onClick={(click) => {
-            click.preventDefault();
-            setHasClicked(true);
-          }}
-        >
-          {`fetch ${apiType} data`}
-        </button>
-      )}
-      {loading ? (
-        "LOADING"
-      ) : (
-        <div>
-          {localState.results.map((item) => {
-            return <div>{item.name}</div>;
-          })}
-        </div>
-      )}
+      <button
+        onClick={(click) => {
+          click.preventDefault();
+          fetchData(setData, { api: apiType });
+        }}
+      >
+        {`fetch ${apiType} data`}
+      </button>
+      <Search updateQuery={updateQuery} />
+      <div>
+        {!monsterData ? (
+          map(localState.results, result => {
+            return (
+                  <div
+                    key={result.index}
+                    onClick={(click) => {
+                      click.preventDefault();
+                      updateQuery(result.name);
+                    }}
+                  >
+                    {result.name}
+                  </div>
+                );
+          })
+        ) : (
+          <button onClick={(click) => logData(click)}>Check Console</button>
+        )}
+      </div>
     </div>
   );
 };
