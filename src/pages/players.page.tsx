@@ -54,7 +54,7 @@ export const PlayersPage = () => {
   return (
     <div style={{ marginTop: "10%" }}>
       <button
-        hidden={players.length === 4}
+        hidden={players.length === 4 || loading}
         onClick={(click) => {
           resetPlayerData(click);
         }}

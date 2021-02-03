@@ -11,37 +11,60 @@ export const Player = ({
   const [snippet, setSnippet] = useState<{
     name: string;
     description: string;
-    index: number;
-  }>({ name: "", description: "", index: -1 });
+  }>({ name: "", description: "" });
+
+  const reset = (click?: React.MouseEvent<HTMLHeadingElement, MouseEvent>) => {
+    click && click.preventDefault();
+    toggleAction(!showAction);
+    setSnippet({ name: "", description: "" });
+  };
+
+  const setAction = (
+    click: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    action?: App.ClassAction,
+  ) => {
+    click && click.preventDefault();
+
+    if (!action) {
+      reset();
+      return;
+    }
+
+    if (action) {
+      toggleAction(!showAction);
+      setSnippet({
+        name: action.name,
+        description: action.snippet
+      });
+      return;
+    }
+  };
   return (
     <>
       {render === false ? null : (
         <div>
-          <h1>{character.name}</h1>
+          <h1 onClick={click => reset(click)}>{character.name}</h1>
           <>
             {showAction
               ? null
               : character.actions?.class.map((action, index) => {
                   return (
-                    <div key={index}>
-                      <h5
-                        onClick={(click) => {
-                          click.preventDefault();
-                          toggleAction(!showAction);
-                          setSnippet({
-                            name: action.name,
-                            description: action.snippet,
-                            index,
-                          });
-                        }}
-                      >
-                        {action.name}
-                      </h5>
+                    <div
+                      key={index}
+                      onClick={(click) => {
+                        setAction(click, action);
+                      }}
+                    >
+                      <h5>{action.name}</h5>
                     </div>
                   );
                 })}
             {showAction === false ? null : (
-              <div>
+              <div
+                onClick={(click) => {
+                  setAction(click);
+                }}
+              >
                 <div>{snippet.name}</div>
                 <p>{`${snippet.description}`}</p>
               </div>
