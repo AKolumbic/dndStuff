@@ -52,7 +52,7 @@ export const PlayersPage = () => {
   }, [cache]);
 
   return (
-    <div style={{ marginTop: "10%" }}>
+    <>
       <button
         hidden={players.length === 4 || loading}
         onClick={(click) => {
@@ -79,6 +79,6 @@ export const PlayersPage = () => {
         })
       )}
       <Player character={selectedPlayerCharacter} render={showData} />
-    </div>
+    </>
   );
 };
