@@ -17,6 +17,10 @@ export type Alightment =
 
 export type DataType = null | Monster | PlayerClass | Race | Equipment | Spell;
 
+export type nullStr = string | null;
+
+export type nullNum = number | null;
+
 interface Dice {
   die: App.DiceType;
   modifier: number;
@@ -197,7 +201,7 @@ interface Spell extends GenericObj {
 interface PlayerCharacter {
   actions: {
     background: any;
-    class: any[];
+    class: ClassActions[];
     feat: any[];
     item: any;
     race: any[];
@@ -218,7 +222,7 @@ interface PlayerCharacter {
   characterValues: any[];
   choices: {
     background: any;
-    class: any[];
+    class: ClassActions[];
     feat: any[];
     item: any;
     race: any[];
@@ -308,4 +312,43 @@ interface PlayerCharacter {
     personalityTraits: string;
   };
   weight: number;
+}
+
+interface ClassActions extends Record<string, any> {
+  abilityModifierStatId: any;
+  actionType: number;
+  activation: { activationTime: any; activationType: number };
+  ammunition: any;
+  attackSubtype: number;
+  attackTypeRange: number;
+  componentId: number;
+  componentTypeId: number;
+  damageTypeId: number;
+  description: string;
+  dice: any;
+  displayAsAttack: boolean;
+  entityTypeId: string;
+  fixedSaveDc: any;
+  fixedToHit: any;
+  id: string;
+  isMartialArts: boolean;
+  isProficient: boolean;
+  limitedUse: any;
+  name: string;
+  numberOfTargets: any;
+  onMissDescription: string;
+  range: {
+    aoeSize: any;
+    aoeType: any;
+    hasAoeSpecialDescription: false;
+    longRange: any;
+    minimumRange: any;
+    range: any;
+  };
+  saveFailDescription: string;
+  saveStatId: any;
+  saveSuccessDescription: string;
+  snippet: any;
+  spellRangeType: any;
+  value: number;
 }
