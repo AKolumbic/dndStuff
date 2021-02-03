@@ -30,7 +30,7 @@ export const PlayersPage = () => {
         <h2>LOADING</h2>
       ) : (
         players.map((player, index) => {
-          return <div key={index} style={{ marginTop: "1" }}>{player.name}</div>;
+          return <div key={index} style={{ marginTop: "1%" }}>{player.name}</div>;
         })
       )}
     </div>
