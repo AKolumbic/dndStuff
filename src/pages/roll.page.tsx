@@ -9,36 +9,57 @@ export const RollPage = () => {
   const [rollValue, setRollValue] = useState("");
   const [rollStyle, setRollStyle] = useState({ color: "white" });
   const [previousRolls, setPreviousRolls] = useState<string[]>([]);
+  const [text, setText] = useState<string>("");
+  const [total, setTotal] = useState<string>("");
 
   const updateDiceValue = (value: App.DiceType) => {
     setPreviousRolls([]);
+    setText("");
+    setTotal("");
+    setRollValue("");
     setDieType(value);
   };
+
   const updateModifierValue = (value: number) => {
     setModifier(value);
   };
 
   const updateRoll = (value: string) => {
+    if (previousRolls.length === 10) {
+      setText("Too Many Rolls");
+      setTotal("");
+      setRollValue("");
+      setPreviousRolls([]);
+      return;
+    }
+
     value === die.toString()
       ? setRollStyle({ color: "green" })
       : value === "1"
       ? setRollStyle({ color: "red" })
       : setRollStyle({ color: "white" });
-    setPreviousRolls([...previousRolls, ` ${value}, `]);
+
+    setPreviousRolls([...previousRolls, ` ${value} `]);
+    setTotal(`${Number(total === "" ? 0 : Number(total)) + Number(value)}`);
+    setText("Previous Rolls (Click to Remove): ");
     setRollValue(value);
   };
 
   return (
     <div>
-      <h3
+      <div
         onClick={(click) => {
           click.preventDefault();
+          setText("");
+          setTotal("");
           setPreviousRolls([]);
         }}
-        style={{ marginBottom: "10%" }}
+        style={{ marginTop: "10%", marginBottom: "10%" }}
       >
-        {previousRolls}
-      </h3>
+        <h5>{text}</h5>
+        <div>{previousRolls}</div>
+        <div>{total}</div>
+      </div>
       <label>Roll: </label>
       <RollButton
         dice={{

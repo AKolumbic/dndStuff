@@ -29,3 +29,10 @@ export async function fetchData(
   const data: App.APIResponse = await response.json();
   setData(data);
 }
+
+export async function fetchPlayerData(id: number) {
+  const response = await fetch(`https://ddb-character.vttassets.com/${id}`);
+  const json = await response.json();
+  const playerData: App.PlayerCharacter = json.data;
+  return playerData;
+}

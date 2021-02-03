@@ -15,7 +15,7 @@ export type Alightment =
   | "chaotic good"
   | "chaotic evil";
 
-export type DataType = null | Monster | PlayerClass
+export type DataType = null | Monster | PlayerClass | Race | Equipment | Spell;
 
 interface Dice {
   die: App.DiceType;
@@ -31,23 +31,14 @@ interface Roll {
 
 interface APIResponse {
   count: number;
-  results: Item[];
+  results: GenericObj[];
 }
 
-interface Item {
+interface GenericObj {
   index: string;
   name: string;
   url: string;
 }
-interface APIResult extends Item {}
-interface Proficiency extends Item {}
-interface SavingThrow extends Item {}
-interface DamageType extends Item {}
-interface DCType extends Item {}
-interface AbilityScore extends Item {}
-interface Language extends Item {}
-interface Trait extends Item {}
-interface SubClass extends Item {}
 
 interface Monster {
   actions: Action[];
@@ -55,7 +46,7 @@ interface Monster {
   armor_class: number;
   challenge_rating: number;
   charisma: number;
-  condition_immunities: Item[];
+  condition_immunities: GenericObj[];
   constitution: number;
   damage_immunities: string[];
   damage_resistances: string[];
@@ -73,13 +64,14 @@ interface Monster {
   name: string;
   proficiencies: {
     value: number;
-    proficiency: Proficiency[];
+    proficiency: GenericObj[];
   };
   senses: Record<string, string | number>;
   size: string;
   special_abilities: {
     name: string;
     desc: string;
+    damage?: Damage;
   }[];
   speed: {
     walk: string;
@@ -96,14 +88,9 @@ interface Monster {
 
 interface Action {
   attack_bonus?: number;
-  damage?:
-    | {
-        damage_dice: number;
-        damage_type: DamageType;
-      }[]
-    | [null];
+  damage?: Damage;
   dc?: {
-    dc_type: DCType;
+    dc_type: GenericObj;
     dc_value: number;
     success_type: string;
   };
@@ -123,44 +110,202 @@ interface Action {
   };
 }
 
-interface PlayerClass {
+export type Damage =
+  | {
+      damage_dice: number | string;
+      damage_type: GenericObj;
+    }
+  | {
+      damage_dice: number | string;
+      damage_type: GenericObj;
+    }[]
+  | [null];
+
+interface PlayerClass extends GenericObj {
   class_levels: string;
   hit_die: number;
-  index: string;
-  name: string;
-  proficiencies: Proficiency[];
+  proficiencies: GenericObj[];
   proficiency_choices: {
     choose: number;
-    from: Proficiency[];
+    from: GenericObj[];
     type: string;
   }[];
-  saving_throws: SavingThrow[];
+  saving_throws: GenericObj[];
   starting_equipment: string;
-  subclasses: SubClass[];
-  url: string;
+  subclasses: GenericObj[];
 }
 
-interface Race {
-  ability_bonuses: {
-    abilityScore: AbilityScore;
+interface Race extends GenericObj {
+  ability_bonuses?: {
+    abilityScore: GenericObj;
     bonus: number;
   };
-  age: string;
-  alignment: string;
-  index: string;
-  language_desc: string;
-  languages: Language[];
-  name: string;
-  size: string;
-  size_description: string;
-  speed: number;
-  starting_proficiencies: any[];
-  subraces: any[];
-  trait_options: {
-    from: Trait[];
+  age?: string;
+  alignment?: string;
+  language_desc?: string;
+  languages?: GenericObj[];
+  size?: string;
+  size_description?: string;
+  speed?: number;
+  starting_proficiencies?: any[];
+  subraces?: any[];
+  trait_options?: {
+    from: GenericObj[];
     choose: number;
     type: string;
   };
-  traits: Trait[];
-  url: string;
+  traits?: GenericObj[];
+}
+
+interface Equipment extends GenericObj {
+  category_range?: string;
+  cost?: {
+    quantity: number;
+    unit: string;
+  };
+  desc?: string[];
+  damage?: Damage;
+  equipment_category?: GenericObj;
+  gear_category?: GenericObj;
+  properties?: GenericObj[];
+  range?: {
+    normal: number;
+    long: null | number;
+  };
+  tool_category?: string;
+  two_handed_damage?: Damage;
+  weapon_category?: string;
+  weapon_range?: string;
+  weight?: ?number;
+}
+
+interface Spell extends GenericObj {
+  area_of_effect?: { type: string; size: number };
+  casting_time?: string;
+  classes?: GenericObj[];
+  components?: string[];
+  concentration?: true;
+  desc?: string[];
+  duration?: string;
+  level?: number;
+  range?: string;
+  ritual?: boolean;
+  school?: GenericObj;
+  subclasses?: GenericObj[];
+}
+
+interface PlayerCharacter {
+  actions: {
+    background: any;
+    class: any[];
+    feat: any[];
+    item: any;
+    race: any[];
+  };
+  activeSourceCategories: number[];
+  adjustmentXp: any;
+  age: number;
+  alignmentId: number;
+  avatarId: number;
+  avatarUrl: string;
+  backdropAvatarId: any;
+  backdropAvatarUrl: any;
+  background: any;
+  baseHitPoints: number;
+  bonusHitPoints: any;
+  bonusStats: any[];
+  campaign: any;
+  characterValues: any[];
+  choices: {
+    background: any;
+    class: any[];
+    feat: any[];
+    item: any;
+    race: any[];
+  };
+  classSpells: any[];
+  classes: any[];
+  conditions: any[];
+  configuration: {
+    abilityScoreType: number;
+    showHelpText: boolean;
+    startingEquipmentType: number;
+  };
+  creatures: any[];
+  currencies: {
+    cp: number;
+    ep: number;
+    gp: number;
+    pp: number;
+    sp: number;
+  };
+  currentXp: number;
+  customActions: any[];
+  customDefenseAdjustments: any[];
+  customItems: any[];
+  customProficiencies: any[];
+  customSenses: any[];
+  customSpeeds: any[];
+  deathSaves: {
+    failCount: any;
+    isStabilized: boolean;
+    successCount: any;
+  };
+  defaultBackdrop: {
+    backdropAvatarUrl: string;
+    smallBackdropAvatarUrl: string;
+    largeBackdropAvatarUrl: string;
+    thumbnailBackdropAvatarUrl: string;
+  };
+  eyes: string;
+  faith: any;
+  feats: any[];
+  frameAvatarId: any;
+  frameAvatarUrl: any;
+  gender: string;
+  hair: string;
+  height: string;
+  id: number;
+  inspiration: boolean;
+  inventory: any[];
+  largeBackdropAvatarId: any;
+  largeBackdropAvatarUrl: any;
+  lifestyle: any;
+  lifestyleId: number;
+  modifiers: any;
+  name: string;
+  notes: any;
+  optionalClassFeatures: any[];
+  optionalOrigins: any[];
+  options: any;
+  overrideHitPoints: any;
+  overrideStats: any[];
+  pactMagic: any[];
+  preferences: any;
+  race: any;
+  raceDefinitionId: any;
+  raceDefinitionTypeId: any;
+  readonlyUrl: string;
+  removedHitPoints: number;
+  skin: string;
+  smallBackdropAvatarId: any;
+  smallBackdropAvatarUrl: any;
+  socialName: any;
+  spellDefenses: any;
+  spellSlots: any[];
+  spells: any;
+  stats: any[];
+  temporaryHitPoints: number;
+  themeColor: any;
+  themeColorId: any;
+  thumbnailBackdropAvatarId: any;
+  thumbnailBackdropAvatarUrl: any;
+  traits: {
+    appearance: any;
+    bonds: any;
+    flaws: string;
+    ideals: string;
+    personalityTraits: string;
+  };
+  weight: number;
 }
