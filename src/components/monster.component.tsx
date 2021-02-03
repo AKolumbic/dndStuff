@@ -10,14 +10,11 @@ export const Monster = ({ monster }: { monster: App.Monster }) => {
         <div>{`Intelligence: ${monster.intelligence}`}</div>
         <div>{`Wisdom: ${monster.wisdom}`}</div>
         <div>{`Charisma: ${monster.charisma}`}</div>
-
         <div style={{ marginTop: "10%" }} />
-
         <div>{`Hit Points: ${monster.hit_points}`}</div>
         <div>{`Challenge Rating: ${monster.challenge_rating}`}</div>
         <div>{`Size: ${monster.size}`}</div>
         <div>{`Type: ${monster.type}`}</div>
-
       </div>
     </>
   );
