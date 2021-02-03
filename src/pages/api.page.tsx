@@ -38,7 +38,7 @@ export const APIPage = () => {
         {`fetch ${apiType}`}
       </button>
       <Search render={false} updateQuery={updateQuery} />
-      <div>
+      <div style={{ flex: 1, overflowX: 'scroll', height: '30%' }}>
         {!item
           ? map(localState.results, (result) => {
               return (
