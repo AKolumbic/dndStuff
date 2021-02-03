@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Action } from "./action.component";
+import { Inventory } from "./inventory.component";
 
 export const Player = ({
   character,
@@ -12,7 +14,6 @@ export const Player = ({
     name: string;
     description: string;
   }>({ name: "", description: "" });
-
   const reset = (click?: React.MouseEvent<HTMLHeadingElement, MouseEvent>) => {
     click && click.preventDefault();
     toggleAction(!showAction);
@@ -21,7 +22,7 @@ export const Player = ({
 
   const setAction = (
     click: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    action?: App.ClassAction,
+    action?: App.ClassAction
   ) => {
     click && click.preventDefault();
 
@@ -34,43 +35,26 @@ export const Player = ({
       toggleAction(!showAction);
       setSnippet({
         name: action.name,
-        description: action.snippet
+        description: action.snippet,
       });
       return;
     }
   };
+
   return (
     <>
       {render === false ? null : (
         <div>
-          <h1 onClick={click => reset(click)}>{character.name}</h1>
-          <>
-            {showAction
-              ? null
-              : character.actions?.class.map((action, index) => {
-                  return (
-                    <div
-                      key={index}
-                      onClick={(click) => {
-                        setAction(click, action);
-                      }}
-                    >
-                      <h5>{action.name}</h5>
-                    </div>
-                  );
-                })}
-            {showAction === false ? null : (
-              <div
-                onClick={(click) => {
-                  setAction(click);
-                }}
-              >
-                <div>{snippet.name}</div>
-                <p>{`${snippet.description}`}</p>
-              </div>
-            )}
-          </>
-          <>{}</>
+          <h1 onClick={(click) => reset(click)}>{character.name}</h1>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Action
+              showAction={showAction}
+              actions={character.actions.class}
+              setAction={setAction}
+              snippet={snippet}
+            />
+            <Inventory data={character?.characterValues} render={showAction}/>
+          </div>
         </div>
       )}
     </>

@@ -1,18 +1,12 @@
 import React from "react";
 import "./App.css";
-import {
-  // RollPage,
-  // APIPage,
-  PlayersPage
-} from "./pages";
+import { DevPage } from "./pages";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <PlayersPage />
-        {/* <RollPage />
-        <APIPage /> */}
+        <DevPage />
       </header>
     </div>
   );

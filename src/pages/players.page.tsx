@@ -69,7 +69,6 @@ export const PlayersPage = () => {
           return (
             <div
               key={index}
-              style={{ marginTop: "1%" }}
               onClick={(click) => {
                 showPlayerData(player, click);
               }}
