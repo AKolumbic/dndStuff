@@ -201,7 +201,7 @@ interface Spell extends GenericObj {
 interface PlayerCharacter {
   actions: {
     background: any;
-    class: ClassActions[];
+    class: ClassAction[];
     feat: any[];
     item: any;
     race: any[];
@@ -214,15 +214,28 @@ interface PlayerCharacter {
   avatarUrl: string;
   backdropAvatarId: any;
   backdropAvatarUrl: any;
-  background: any;
+  background: {
+    customBackground: CustomBackground;
+    definition: Background;
+    definitionId: any;
+    hasCustomBackground: boolean;
+  };
   baseHitPoints: number;
   bonusHitPoints: any;
   bonusStats: any[];
   campaign: any;
-  characterValues: any[];
+  characterValues: {
+    contextId: any;
+    contextTypeId: any;
+    notes: any;
+    typeId: number;
+    value: any;
+    valueId: string;
+    valueTypeId: string;
+  }[];
   choices: {
     background: any;
-    class: ClassActions[];
+    class: ClassAction[];
     feat: any[];
     item: any;
     race: any[];
@@ -314,7 +327,7 @@ interface PlayerCharacter {
   weight: number;
 }
 
-interface ClassActions extends Record<string, any> {
+interface ClassAction extends Record<string, any> {
   abilityModifierStatId: any;
   actionType: number;
   activation: { activationTime: any; activationType: number };
@@ -351,4 +364,47 @@ interface ClassActions extends Record<string, any> {
   snippet: any;
   spellRangeType: any;
   value: number;
+}
+
+interface CustomBackground {
+  backgroundType: any;
+  characteristicsBackground: any;
+  characteristicsBackgroundDefinitionId: any;
+  description: any;
+  entityTypeId: number;
+  featuresBackground: any;
+  featuresBackgroundDefinitionId: any;
+  id: number;
+  name: any;
+}
+
+interface Background {
+  avatarUrl: any;
+  bonds: { description: string; diceRoll: number; id: number }[] | [];
+  contractsDescription: any;
+  description: string;
+  entityTypeId: number;
+  equipmentDescription: string;
+  featureDescription: string;
+  featureName: string;
+  flaws: any[];
+  id: number;
+  ideals: any[];
+  isHomebrew: boolean;
+  languagesDescription: string;
+  largeAvatarUrl: any;
+  name: string;
+  organization: any;
+  personalityTraits: any[];
+  shortDescription: string;
+  skillProficienciesDescription: string;
+  snippet: string;
+  sources: any[];
+  spellListIds: any[];
+  spellsPostDescription: any;
+  spellsPreDescription: any;
+  suggestedCharacteristicsDescription: string;
+  suggestedLanguages: any;
+  suggestedProficiencies: any;
+  toolProficienciesDescription: string;
 }
