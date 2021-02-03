@@ -18,6 +18,7 @@ export const Player = ({
     click && click.preventDefault();
     toggleAction(!showAction);
     setSnippet({ name: "", description: "" });
+    render = false
   };
 
   const setAction = (
@@ -45,15 +46,23 @@ export const Player = ({
     <>
       {render === false ? null : (
         <div>
-          <h1 onClick={(click) => reset(click)}>{character.name}</h1>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <img
+              src={character.avatarUrl}
+              alt={"player-character-avatar"}
+              style={{ contain: "cover", height: "5rem", width: "5rem" }}
+            />
+            <h1 onClick={(click) => reset(click)}>{character.name}</h1>
+          </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <Action
+              render={false}
               showAction={showAction}
               actions={character.actions.class}
               setAction={setAction}
               snippet={snippet}
             />
-            <Inventory data={character?.characterValues} render={showAction}/>
+            <Inventory data={character?.characterValues} render={false} />
           </div>
         </div>
       )}

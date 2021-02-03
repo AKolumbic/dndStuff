@@ -42,7 +42,7 @@ export const Action = ({
               }}
             >
               <div>{snippet.name}</div>
-              <p>{`${snippet.description}`}</p>
+              <p>{snippet.description}</p>
             </div>
           )}
         </div>

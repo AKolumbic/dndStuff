@@ -1,9 +1,9 @@
 import {
   // RollPage,
-  // APIPage,
-  PlayersPage,
+  APIPage,
+  // PlayersPage,
 } from "./index";
 
 export const DevPage = () => {
-  return <PlayersPage />;
+  return <APIPage />;
 };
