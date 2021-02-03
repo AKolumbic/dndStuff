@@ -3,6 +3,7 @@ import { map } from "lodash";
 import { Dropdown } from "../components/dropdown.component";
 import { Search } from "../components/search.component";
 import { fetchData } from "../services/api.service";
+import { Monster } from "../components/monster.component";
 
 export const APIPage = () => {
   const [localState, setLocalState] = useState<App.APIResponse>({
@@ -38,23 +39,22 @@ export const APIPage = () => {
       </button>
       <Search render={false} updateQuery={updateQuery} />
       <div>
-        {!item ? (
-          map(localState.results, (result) => {
-            return (
-              <div
-                key={result.index}
-                onClick={(click) => {
-                  click.preventDefault();
-                  updateQuery(result.index);
-                }}
-              >
-                {result.name}
-              </div>
-            );
-          })
-        ) : (
-          <div>{item.name}</div>
-        )}
+        {!item
+          ? map(localState.results, (result) => {
+              return (
+                <div
+                  key={result.index}
+                  onClick={(click) => {
+                    click.preventDefault();
+                    updateQuery(result.index);
+                  }}
+                >
+                  {result.name}
+                </div>
+              );
+            })
+          : apiType === "monsters" &&
+            item && <Monster monster={item as App.Monster} />}
       </div>
     </div>
   );
