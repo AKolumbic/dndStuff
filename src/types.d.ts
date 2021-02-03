@@ -17,6 +17,10 @@ export type Alightment =
 
 export type DataType = null | Monster | PlayerClass | Race | Equipment | Spell;
 
+export type nullStr = string | null;
+
+export type nullNum = number | null;
+
 interface Dice {
   die: App.DiceType;
   modifier: number;
@@ -197,7 +201,7 @@ interface Spell extends GenericObj {
 interface PlayerCharacter {
   actions: {
     background: any;
-    class: any[];
+    class: ClassAction[];
     feat: any[];
     item: any;
     race: any[];
@@ -210,15 +214,28 @@ interface PlayerCharacter {
   avatarUrl: string;
   backdropAvatarId: any;
   backdropAvatarUrl: any;
-  background: any;
+  background: {
+    customBackground: CustomBackground;
+    definition: Background;
+    definitionId: any;
+    hasCustomBackground: boolean;
+  };
   baseHitPoints: number;
   bonusHitPoints: any;
   bonusStats: any[];
   campaign: any;
-  characterValues: any[];
+  characterValues: {
+    contextId: any;
+    contextTypeId: any;
+    notes: any;
+    typeId: number;
+    value: any;
+    valueId: string;
+    valueTypeId: string;
+  }[];
   choices: {
     background: any;
-    class: any[];
+    class: ClassAction[];
     feat: any[];
     item: any;
     race: any[];
@@ -308,4 +325,86 @@ interface PlayerCharacter {
     personalityTraits: string;
   };
   weight: number;
+}
+
+interface ClassAction extends Record<string, any> {
+  abilityModifierStatId: any;
+  actionType: number;
+  activation: { activationTime: any; activationType: number };
+  ammunition: any;
+  attackSubtype: number;
+  attackTypeRange: number;
+  componentId: number;
+  componentTypeId: number;
+  damageTypeId: number;
+  description: string;
+  dice: any;
+  displayAsAttack: boolean;
+  entityTypeId: string;
+  fixedSaveDc: any;
+  fixedToHit: any;
+  id: string;
+  isMartialArts: boolean;
+  isProficient: boolean;
+  limitedUse: any;
+  name: string;
+  numberOfTargets: any;
+  onMissDescription: string;
+  range: {
+    aoeSize: any;
+    aoeType: any;
+    hasAoeSpecialDescription: false;
+    longRange: any;
+    minimumRange: any;
+    range: any;
+  };
+  saveFailDescription: string;
+  saveStatId: any;
+  saveSuccessDescription: string;
+  snippet: any;
+  spellRangeType: any;
+  value: number;
+}
+
+interface CustomBackground {
+  backgroundType: any;
+  characteristicsBackground: any;
+  characteristicsBackgroundDefinitionId: any;
+  description: any;
+  entityTypeId: number;
+  featuresBackground: any;
+  featuresBackgroundDefinitionId: any;
+  id: number;
+  name: any;
+}
+
+interface Background {
+  avatarUrl: any;
+  bonds: { description: string; diceRoll: number; id: number }[] | [];
+  contractsDescription: any;
+  description: string;
+  entityTypeId: number;
+  equipmentDescription: string;
+  featureDescription: string;
+  featureName: string;
+  flaws: any[];
+  id: number;
+  ideals: any[];
+  isHomebrew: boolean;
+  languagesDescription: string;
+  largeAvatarUrl: any;
+  name: string;
+  organization: any;
+  personalityTraits: any[];
+  shortDescription: string;
+  skillProficienciesDescription: string;
+  snippet: string;
+  sources: any[];
+  spellListIds: any[];
+  spellsPostDescription: any;
+  spellsPreDescription: any;
+  suggestedCharacteristicsDescription: string;
+  suggestedLanguages: any;
+  suggestedProficiencies: any;
+  toolProficienciesDescription: string;
 }
