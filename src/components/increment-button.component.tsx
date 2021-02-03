@@ -30,14 +30,14 @@ export const IncrementButton = ({
 
   return (
     <>
-      {render ? (
+      {render === false ? null : (
         <div>
           <label>{`Set a ${buttonType}: `}</label>
           <button onClick={(click) => handleClick(click, "-")}> - </button>
           {count}
           <button onClick={(click) => handleClick(click, "+")}> + </button>
         </div>
-      ) : null}
+      )}
     </>
   );
 };

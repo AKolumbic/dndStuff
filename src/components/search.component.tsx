@@ -16,7 +16,7 @@ export const Search = ({
 
   return (
     <>
-      {render ? (
+      {render === false ? null : (
         <div>
           <input onChange={(event) => handleChange(event)} />
           <button
@@ -29,7 +29,7 @@ export const Search = ({
             Search
           </button>
         </div>
-      ) : null}
+      )}
     </>
   );
 };
