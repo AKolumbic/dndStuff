@@ -19,23 +19,15 @@ export const RollButton = ({
     critFail: false,
     result: 0,
   });
+
   const style = diceRoll.critRoll
     ? { color: "green" }
     : diceRoll.critFail
     ? { color: "red" }
     : { color: "black" };
 
-  const text =
-    diceRoll.result === 0
-      ? `d${die}`
-      : `${diceRoll.text}${diceRoll.result}`;
-
   useEffect(() => {
-    const text =
-      modifier === 0
-        ? `d${die}: `
-        : `d${die}${modifier}: `;
-    setRollText(text);
+    setRollText(`d${die}`);
   }, [dice]);
 
   const roll = (click: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -55,7 +47,7 @@ export const RollButton = ({
     <>
       {render === false ? null : (
         <button onClick={(click) => roll(click)}>
-          <div style={style}>{text}</div>
+          <div style={style}>{rollText}</div>
         </button>
       )}
     </>
