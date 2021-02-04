@@ -12,10 +12,15 @@ export const RollPage = () => {
   const [text, setText] = useState<string>("");
   const [total, setTotal] = useState<string>("");
 
-  const updateDiceValue = (value: App.DiceType) => {
-    setPreviousRolls([]);
+  const reset = (click?: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    click && click.preventDefault();
     setText("");
     setTotal("");
+    setPreviousRolls([]);
+  };
+
+  const updateDiceValue = (value: App.DiceType) => {
+    reset();
     setRollValue("");
     setDieType(value);
   };
@@ -48,12 +53,7 @@ export const RollPage = () => {
   return (
     <div>
       <div
-        onClick={(click) => {
-          click.preventDefault();
-          setText("");
-          setTotal("");
-          setPreviousRolls([]);
-        }}
+        onClick={(click) => reset(click)}
         style={{ marginTop: "10%", marginBottom: "10%" }}
       >
         <h5>{text}</h5>
