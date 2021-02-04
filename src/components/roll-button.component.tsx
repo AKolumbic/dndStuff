@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { random } from "../services/utils";
 
@@ -35,7 +36,7 @@ export const RollButton = ({
         ? `d${die}: `
         : `d${die}${modifier}: `;
     setRollText(text);
-  }, [die, modifier]);
+  }, [dice]);
 
   const roll = (click: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     click.preventDefault();
