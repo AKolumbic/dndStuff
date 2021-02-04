@@ -46,23 +46,23 @@ export const Player = ({
     <>
       {render === false ? null : (
         <div>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+            <h1 onClick={(click) => reset(click)}>{character.name}</h1>
+          <div>
             <img
               src={character.avatarUrl}
               alt={"player-character-avatar"}
               style={{ contain: "cover", height: "5rem", width: "5rem" }}
             />
-            <h1 onClick={(click) => reset(click)}>{character.name}</h1>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+            <h3>Actions: </h3>
             <Action
-              render={false}
               showAction={showAction}
               actions={character.actions.class}
               setAction={setAction}
               snippet={snippet}
             />
-            <Inventory data={character?.characterValues} render={false} />
+
+            <h3 style={{ marginTop: '15%' }}>Inventory: </h3>
+            <Inventory data={character?.characterValues} />
           </div>
         </div>
       )}

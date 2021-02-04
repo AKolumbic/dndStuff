@@ -7,7 +7,8 @@ import {
 export const DevPage = () => {
   return (
     <div style={{ position: "absolute", top: 0 }}>
-      <h5>Mists of Dethvale Player Characters</h5>
+      <h3>Mists of Dethvale</h3>
+      <h4 style={{ marginTop: '-6%' }}>Player Characters: </h4>
       <PlayersPage />
       <div style={{ marginTop: '10%' }} />
       <APIPage />
